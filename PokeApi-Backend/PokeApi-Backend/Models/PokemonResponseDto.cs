@@ -12,6 +12,7 @@ namespace PokeApi_Backend.Models
 
         [JsonPropertyName("sprites")]
         public PokemonImages? Images { get; set; }
+        public bool isFavorite { get; set; } = false;
     }
     public class PokemonImages
     {

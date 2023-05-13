@@ -41,8 +41,8 @@ namespace PokeApi_Backend.Controllers
         {
             try
             {
-                await _pokeService.AddFavoritePokemon(name);
-                return Ok($"You added the pokemon {name} to your favorite list!");
+                var result = await _pokeService.AddFavoritePokemon(name);
+                return Ok(result);
             }
 
             catch (Exception ex)

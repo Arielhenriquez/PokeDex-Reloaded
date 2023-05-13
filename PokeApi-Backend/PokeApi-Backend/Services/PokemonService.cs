@@ -8,8 +8,8 @@ namespace PokeApi_Backend.Services
     {
         Task<PagedPokemonsDto> GetPagedPokemons(int pageSize, int pageNumber);
         Task<PokemonResponseDto> GetPokemonByName(string name);
-        Task AddFavoritePokemon(string name);
-        List<string> GetFavorites();
+        Task<string> AddFavoritePokemon(string name);
+        List<PokemonResponseDto> GetFavorites();
     }
 
     public class PokemonService : IPokemonService
@@ -55,29 +55,39 @@ namespace PokeApi_Backend.Services
             return pokemonResponse;
         }
 
-        public async Task AddFavoritePokemon(string name)
+        public async Task<string> AddFavoritePokemon(string name)
         {
             var response = await _client.GetAsync($"{_baseUri}/{name}");
 
             response.EnsureSuccessStatusCode();
 
-            var favorites = _memoryCache.Get<List<string>>(FavoritePokemonKey) ?? new List<string>();
+            var pokemonResponse = await JsonSerializer.DeserializeAsync<PokemonResponseDto>(await response.Content.ReadAsStreamAsync());
 
-            if (favorites.Contains(name))
+
+            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+
+            var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
+            if (existingPokemon == null)
             {
-                favorites.Remove(name);
+                pokemonResponse!.isFavorite = true;
+                favorites.Add(pokemonResponse);
+                _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
+                return $"{name} has been added to the favorites list.";
             }
             else
             {
-                favorites.Add(name);
+                favorites.Remove(existingPokemon);
+                _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
+                return $"{name} is already a favorite and has been removed from the favorites list.";
             }
-
-            _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
         }
 
-        public List<string> GetFavorites()
+
+        public List<PokemonResponseDto> GetFavorites()
         {
-            return _memoryCache.Get<List<string>>(FavoritePokemonKey) ?? new List<string>();
+            var favoritePokemons = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+            return favoritePokemons.Where(p => p.isFavorite).ToList();
         }
+
     }
 }
