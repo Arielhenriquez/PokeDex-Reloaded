@@ -12,7 +12,10 @@ namespace PokeApi_Backend.Models
 
         [JsonPropertyName("sprites")]
         public PokemonImages? Images { get; set; }
-        public bool isFavorite { get; set; } = false;
+
+        [JsonPropertyName("types")]
+        public List<Types>? Types { get; set; }
+        public bool IsFavorite { get; set; } = false;
     }
     public class PokemonImages
     {
@@ -22,4 +25,22 @@ namespace PokeApi_Backend.Models
         [JsonPropertyName("back_default")]
         public string BackImage { get; set; } = string.Empty;
     }
+    public class Types
+    {
+        [JsonPropertyName("slot")]
+        public int Slot { get; set; }
+
+        [JsonPropertyName("type")]
+        public TypeDetail? Type { get; set; }
+    }
+
+    public class TypeDetail
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("url")]
+        public string Url { get; set; } = string.Empty;
+    }
+
 }

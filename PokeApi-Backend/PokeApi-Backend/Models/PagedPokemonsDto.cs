@@ -19,5 +19,6 @@ namespace PokeApi_Backend.Models
         public string Name { get; set; } = string.Empty;
         [JsonPropertyName("url")]
         public string Url { get; set; } = string.Empty;
+        public string Photo { get; set; } = string.Empty;
     }
 }

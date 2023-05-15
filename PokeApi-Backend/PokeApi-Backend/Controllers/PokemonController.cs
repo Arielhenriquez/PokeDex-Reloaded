@@ -17,7 +17,7 @@ namespace PokeApi_Backend.Controllers
         [HttpGet("paged-pokemons")]
         public async Task<IActionResult> GetPagedPokemons([FromQuery] int pageSize, int pageNumber)
         {
-            var pokemons = await _pokeService.GetPagedPokemons(pageSize, pageNumber);
+            var pokemons = await _pokeService.GetPagedPokemonsAsync(pageSize, pageNumber);
             return Ok(pokemons);
         }
 
@@ -26,7 +26,7 @@ namespace PokeApi_Backend.Controllers
         {
             try
             {
-                var singlePokemon = await _pokeService.GetPokemonByName(name);
+                var singlePokemon = await _pokeService.GetPokemonByNameAsync(name);
                 return Ok(singlePokemon);
             }
 
@@ -41,7 +41,7 @@ namespace PokeApi_Backend.Controllers
         {
             try
             {
-                var result = await _pokeService.AddFavoritePokemon(name);
+                var result = await _pokeService.AddFavoritePokemonAsync(name);
                 return Ok(result);
             }
 

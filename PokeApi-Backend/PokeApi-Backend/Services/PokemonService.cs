@@ -6,9 +6,9 @@ namespace PokeApi_Backend.Services
 {
     public interface IPokemonService
     {
-        Task<PagedPokemonsDto> GetPagedPokemons(int pageSize, int pageNumber);
-        Task<PokemonResponseDto> GetPokemonByName(string name);
-        Task<string> AddFavoritePokemon(string name);
+        Task<PagedPokemonsDto> GetPagedPokemonsAsync(int pageSize, int pageNumber);
+        Task<PokemonResponseDto> GetPokemonByNameAsync(string name);
+        Task<string> AddFavoritePokemonAsync(string name);
         List<PokemonResponseDto> GetFavorites();
     }
 
@@ -27,9 +27,10 @@ namespace PokeApi_Backend.Services
         }
 
 
-        public async Task<PagedPokemonsDto> GetPagedPokemons(int pageSize, int pageNumber)
+        public async Task<PagedPokemonsDto> GetPagedPokemonsAsync(int pageSize, int pageNumber)
         {
-            var response = await _client.GetAsync($"{_baseUri}?limit={pageSize}?offset={pageNumber}");
+            int offset = (pageNumber - 1) * pageSize;
+            var response = await _client.GetAsync($"{_baseUri}?limit={pageSize}&offset={offset}");
 
             response.EnsureSuccessStatusCode();
 
@@ -37,11 +38,19 @@ namespace PokeApi_Backend.Services
 
             if (pokemonResponse == null) throw new ArgumentException("Invalid JSON response");
 
+            var tasks = pokemonResponse.Results!.Select(async pokemon =>
+            {
+                var pokemonInfoResponse = await GetPokemonByNameAsync(pokemon.Name);
+                pokemon.Photo = pokemonInfoResponse.Images?.FrontImage!;
+            });
+
+            await Task.WhenAll(tasks);
 
             return pokemonResponse;
         }
 
-        public async Task<PokemonResponseDto> GetPokemonByName(string name)
+
+        public async Task<PokemonResponseDto> GetPokemonByNameAsync(string name)
         {
             var response = await _client.GetAsync($"{_baseUri}/{name}");
 
@@ -51,11 +60,18 @@ namespace PokeApi_Backend.Services
 
             if (pokemonResponse == null) throw new ArgumentException("Invalid JSON response");
 
+            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+            var favoritePokemon = favorites.FirstOrDefault(p => p.Name == name);
+            if (favoritePokemon != null)
+            {
+                pokemonResponse.IsFavorite = true;
+            }
 
             return pokemonResponse;
         }
 
-        public async Task<string> AddFavoritePokemon(string name)
+
+        public async Task<string> AddFavoritePokemonAsync(string name)
         {
             var response = await _client.GetAsync($"{_baseUri}/{name}");
 
@@ -69,16 +85,16 @@ namespace PokeApi_Backend.Services
             var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
             if (existingPokemon == null)
             {
-                pokemonResponse!.isFavorite = true;
+                pokemonResponse!.IsFavorite = true;
                 favorites.Add(pokemonResponse);
                 _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
-                return $"{name} has been added to the favorites list.";
+                return $"Pokemon: {name} has been added to the favorites list.";
             }
             else
             {
                 favorites.Remove(existingPokemon);
                 _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
-                return $"{name} is already a favorite and has been removed from the favorites list.";
+                return $"Pokemon: {name} is already a favorite and has been removed from the favorites list.";
             }
         }
 
@@ -86,7 +102,7 @@ namespace PokeApi_Backend.Services
         public List<PokemonResponseDto> GetFavorites()
         {
             var favoritePokemons = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
-            return favoritePokemons.Where(p => p.isFavorite).ToList();
+            return favoritePokemons.Where(p => p.IsFavorite).ToList();
         }
 
     }
