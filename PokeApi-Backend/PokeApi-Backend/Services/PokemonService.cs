@@ -27,17 +27,23 @@ namespace PokeApi_Backend.Services
             _memoryCache = memoryCache;
         }
 
+        private async Task<T> GetFromPokemonApiAsync<T>(string endpoint)
+        {
+            var response = await _client.GetAsync($"{_baseUri}/{endpoint}");
+
+            response.EnsureSuccessStatusCode();
+
+            var apiResponse = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
+
+            if (apiResponse == null) throw new ArgumentException("Invalid JSON response");
+
+            return apiResponse;
+        }
 
         public async Task<PagedPokemonsDto> GetPagedPokemonsAsync(int pageSize, int pageNumber)
         {
             int offset = (pageNumber - 1) * pageSize;
-            var response = await _client.GetAsync($"{_baseUri}?limit={pageSize}&offset={offset}");
-
-            response.EnsureSuccessStatusCode();
-
-            var pokemonResponse = await JsonSerializer.DeserializeAsync<PagedPokemonsDto>(await response.Content.ReadAsStreamAsync());
-
-            if (pokemonResponse == null) throw new ArgumentException("Invalid JSON response");
+            var pokemonResponse = await GetFromPokemonApiAsync<PagedPokemonsDto>($"?limit={pageSize}&offset={offset}");
 
             var tasks = pokemonResponse.Results!.Select(async pokemon =>
             {
@@ -53,16 +59,9 @@ namespace PokeApi_Backend.Services
 
         public async Task<PokemonResponseDto> GetPokemonByNameAsync(string name)
         {
-            var response = await _client.GetAsync($"{_baseUri}/{name}");
+            var pokemonResponse = await GetFromPokemonApiAsync<PokemonResponseDto>(name);
 
-            response.EnsureSuccessStatusCode();
-
-            var pokemonResponse = await JsonSerializer.DeserializeAsync<PokemonResponseDto>(await response.Content.ReadAsStreamAsync());
-
-            if (pokemonResponse == null) throw new ArgumentException("Invalid JSON response");
-
-            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
-            var favoritePokemon = favorites.FirstOrDefault(p => p.Name == name);
+            var (favorites, favoritePokemon) = GetFavoritesAndExistingPokemon(name);
             if (favoritePokemon != null)
             {
                 pokemonResponse.IsFavorite = true;
@@ -71,36 +70,35 @@ namespace PokeApi_Backend.Services
             return pokemonResponse;
         }
 
+        private (List<PokemonResponseDto> FavoritePokemons, PokemonResponseDto? ExistingPokemon) GetFavoritesAndExistingPokemon(string name)
+        {
+            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+            var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
 
+            return (FavoritePokemons: favorites, ExistingPokemon: existingPokemon);
+        }
         public async Task<string> AddFavoritePokemonAsync(string name)
         {
-            var response = await _client.GetAsync($"{_baseUri}/{name}");
+            var (favorites, existingPokemon) = GetFavoritesAndExistingPokemon(name);
 
-            response.EnsureSuccessStatusCode();
-
-            var pokemonResponse = await JsonSerializer.DeserializeAsync<PokemonResponseDto>(await response.Content.ReadAsStreamAsync());
-
-            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
-
-            var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
             if (existingPokemon == null)
             {
-                pokemonResponse!.IsFavorite = true;
+                var pokemonResponse = await GetFromPokemonApiAsync<PokemonResponseDto>(name);
+                pokemonResponse.IsFavorite = true;
                 favorites.Add(pokemonResponse);
                 _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
                 return $"Pokemon: {name} has been added to the favorites list.";
             }
             else
             {
-                return $"Pokemon: {name} is already a favorite";
+                return $"Pokemon: {name} is already a favorite.";
             }
         }
 
         public async Task<string> RemoveFavoritePokemonAsync(string name)
         {
-            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+            var (favorites, existingPokemon) = GetFavoritesAndExistingPokemon(name);
 
-            var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
             if (existingPokemon != null)
             {
                 favorites.Remove(existingPokemon);
@@ -112,7 +110,6 @@ namespace PokeApi_Backend.Services
                 return $"Pokemon: {name} is not a favorite.";
             }
         }
-
 
         public List<PokemonResponseDto> GetFavorites()
         {

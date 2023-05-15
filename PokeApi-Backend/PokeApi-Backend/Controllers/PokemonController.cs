@@ -26,7 +26,7 @@ namespace PokeApi_Backend.Controllers
             return Ok(pokemons);
         }
 
-        [SwaggerOperation(Summary = "Get pokemon by name")]
+        [SwaggerOperation(Summary = "Get single pokemon by name")]
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetPokemonByName([FromRoute] string name)
