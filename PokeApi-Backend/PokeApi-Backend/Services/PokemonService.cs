@@ -9,6 +9,7 @@ namespace PokeApi_Backend.Services
         Task<PagedPokemonsDto> GetPagedPokemonsAsync(int pageSize, int pageNumber);
         Task<PokemonResponseDto> GetPokemonByNameAsync(string name);
         Task<string> AddFavoritePokemonAsync(string name);
+        Task<string> RemoveFavoritePokemonAsync(string name);
         List<PokemonResponseDto> GetFavorites();
     }
 
@@ -79,7 +80,6 @@ namespace PokeApi_Backend.Services
 
             var pokemonResponse = await JsonSerializer.DeserializeAsync<PokemonResponseDto>(await response.Content.ReadAsStreamAsync());
 
-
             var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
 
             var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
@@ -92,9 +92,24 @@ namespace PokeApi_Backend.Services
             }
             else
             {
+                return $"Pokemon: {name} is already a favorite";
+            }
+        }
+
+        public async Task<string> RemoveFavoritePokemonAsync(string name)
+        {
+            var favorites = _memoryCache.Get<List<PokemonResponseDto>>(FavoritePokemonKey) ?? new List<PokemonResponseDto>();
+
+            var existingPokemon = favorites.FirstOrDefault(p => p.Name == name);
+            if (existingPokemon != null)
+            {
                 favorites.Remove(existingPokemon);
                 _memoryCache.Set(FavoritePokemonKey, favorites, new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromDays(1)));
-                return $"Pokemon: {name} is already a favorite and has been removed from the favorites list.";
+                return $"Pokemon: {name} has been removed from the favorites list.";
+            }
+            else
+            {
+                return $"Pokemon: {name} is not a favorite.";
             }
         }
 
