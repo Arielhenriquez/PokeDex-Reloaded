@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PokeApi_Backend.Exceptions;
 using PokeApi_Backend.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -49,10 +50,13 @@ namespace PokeApi_Backend.Controllers
         {
             try
             {
-                var result = await _pokeService.AddFavoritePokemonAsync(name);
-                return Ok(result);
+                await _pokeService.AddFavoritePokemonAsync(name);
+                return Ok($"Pokemon: {name} added to the favorite list");
             }
-
+            catch (PokemonAlreadyFavoriteException ex)
+            {
+                return Conflict(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -65,14 +69,18 @@ namespace PokeApi_Backend.Controllers
         {
             try
             {
-                var result = await _pokeService.RemoveFavoritePokemonAsync(name);
-                return Ok(result);
+                await _pokeService.RemoveFavoritePokemonAsync(name);
+                return StatusCode(204);
             }
-
+            catch (PokemonNotFavoriteException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
         }
 
         [SwaggerOperation(Summary = "List all favorite pokemons")]
