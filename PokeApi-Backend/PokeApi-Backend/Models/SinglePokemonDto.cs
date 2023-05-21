@@ -2,7 +2,7 @@
 
 namespace PokeApi_Backend.Models
 {
-    public class PokemonResponseDto
+    public class SinglePokemonDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
