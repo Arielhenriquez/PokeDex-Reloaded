@@ -5,11 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListPokemonsComponent } from './components/list-pokemons/list-pokemons.component';
 import { PokemonDetailsComponent } from './components/pokemon-details/pokemon-details.component';
+import { PokemonService } from './services/pokemon.service';
 
 @NgModule({
   declarations: [AppComponent, ListPokemonsComponent, PokemonDetailsComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
+  providers: [PokemonService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

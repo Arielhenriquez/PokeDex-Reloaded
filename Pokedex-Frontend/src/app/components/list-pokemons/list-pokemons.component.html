@@ -1,1 +1,9 @@
-<p>list-pokemons works!</p>
+<div *ngFor="let pokemon of pokemons">{{pokemon.name}}
+    <div><img src="{{pokemon.photo}}" alt="pokemon"></div>
+
+</div>
+
+<h2>Total de pokemones: {{count}}</h2>
+
+<button *ngIf="pageNumber >1" (click)="getPreviousPage()">Anterior Pagina</button>
+<button (click)="getNextPage()">Siguiente pagina</button>
