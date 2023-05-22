@@ -10,9 +10,26 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 export class ListPokemonsComponent implements OnInit {
   pageSize: number = 10;
   pageNumber: number = 1;
+  first: number = 0;
   count!: number;
+  firstItem: number = 1;
+  lastItem!: number;
   pokemons: AllPokemonsInfo[] = [];
+  loading: boolean = true;
   constructor(private pokemonService: PokemonService) {}
+
+  onPageChange(event: any) {
+    console.log('onPageChange event:', event);
+    if (event.page !== undefined && event.rows !== undefined) {
+      this.pageSize = event.rows;
+      this.pageNumber = event.page + 1;
+      this.first = event.first;
+      this.firstItem = this.first + 1;
+      this.lastItem = Math.min(this.first + this.pageSize, this.count);
+      this.loading = true;
+      this.getPokemons();
+    }
+  }
 
   getPokemons() {
     this.pokemonService
@@ -21,22 +38,13 @@ export class ListPokemonsComponent implements OnInit {
         console.log(pagedPokemons);
         this.count = pagedPokemons.count;
         this.pokemons = pagedPokemons.results;
+        this.first = (this.pageNumber - 1) * this.pageSize;
+        this.loading = false;
       });
   }
 
-  getNextPage() {
-    this.pageNumber++;
-    this.getPokemons();
-  }
-
-  getPreviousPage() {
-    if (this.pageNumber > 1) {
-      this.pageNumber--;
-      this.getPokemons();
-    }
-  }
-
   ngOnInit(): void {
+    this.first = (this.pageNumber - 1) * this.pageSize;
     this.getPokemons();
   }
 }
