@@ -15,18 +15,23 @@ export class ListPokemonsComponent implements OnInit {
   firstItem: number = 1;
   lastItem!: number;
   pokemons: AllPokemonsInfo[] = [];
-  loading: boolean = true;
+  isLoading: boolean = true;
+  isPaginatorDisabled: boolean = false;
   constructor(private pokemonService: PokemonService) {}
 
   onPageChange(event: any) {
     console.log('onPageChange event:', event);
+    if (this.isPaginatorDisabled) {
+      return;
+    }
     if (event.page !== undefined && event.rows !== undefined) {
       this.pageSize = event.rows;
       this.pageNumber = event.page + 1;
       this.first = event.first;
       this.firstItem = this.first + 1;
       this.lastItem = Math.min(this.first + this.pageSize, this.count);
-      this.loading = true;
+      this.isLoading = true;
+      this.isPaginatorDisabled = true;
       this.getPokemons();
     }
   }
@@ -39,7 +44,8 @@ export class ListPokemonsComponent implements OnInit {
         this.count = pagedPokemons.count;
         this.pokemons = pagedPokemons.results;
         this.first = (this.pageNumber - 1) * this.pageSize;
-        this.loading = false;
+        this.isLoading = false;
+        this.isPaginatorDisabled = false;
       });
   }
 
