@@ -1,1 +1,16 @@
-<p>pokemon-details works!</p>
+<p-button icon="pi pi-check" styleClass="p-button-rounded p-button-warning p-button-text p-button-raised"
+    (click)="getByName(pokemonName)"></p-button>
+
+<div class="modal" *ngIf="isOpen">
+    <div class="modal-content">
+        <span class="close" (click)="hideDialog()">&times;</span>
+        <h2>Id:{{pokemonData.id}}</h2>
+        <h2>Name:{{pokemonData.name}}</h2>
+        <div *ngFor="let type of pokemonData?.types">
+            <h2>Type: {{type?.type?.name}}</h2>
+        </div>
+        <img src="{{pokemonData.sprites.front_default}}" alt="pokemon">
+        <img src="{{pokemonData.sprites.back_default}}" alt="pokemon">
+        <p>Modal content goes here.</p>
+    </div>
+</div>

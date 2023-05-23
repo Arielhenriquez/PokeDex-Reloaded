@@ -6,7 +6,7 @@
             <tr>
                 <th style="width:25%" id="name">Name</th>
                 <th style="width:25%" id="photo">Photo</th>
-                <!-- <th style="width:25%" id="Url">Url</th> -->
+                <th style="width:25%" id="details">Details</th>
             </tr>
         </ng-template>
 
@@ -20,10 +20,15 @@
                     <p-skeleton *ngIf="isLoading; else photoContent" width="100%" height="20px"></p-skeleton>
                     <ng-template #photoContent><img src="{{pokemon.photo}}" alt="pokemon"></ng-template>
                 </td>
-                <!-- <td>
-                    <p-skeleton *ngIf="isLoading; else urlContent" width="100%" height="20px"></p-skeleton>
-                    <ng-template #urlContent><a>{{ pokemon.url }}</a></ng-template>
-                </td> -->
+                <td>
+                    <p-skeleton *ngIf="isLoading; else detailContent" width="100%" height="20px"></p-skeleton>
+                    <!-- <ng-template #detailContent><app-pokemon-details></app-pokemon-details></ng-template> -->
+                    <ng-template #detailContent><app-pokemon-details
+                            [pokemonName]="pokemon.name"></app-pokemon-details></ng-template>
+
+                    <!-- <ng-template #urlContent><a>{{ pokemon.url }}</a></ng-template> -->
+                    <!-- <ng-template #urlContent><a>{{ pokemon.url }}</a></ng-template> -->
+                </td>
             </tr>
         </ng-template>
 
