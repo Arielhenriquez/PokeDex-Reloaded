@@ -1,8 +1,8 @@
 export interface SinglePokemon {
   id: number;
-  name: string;
-  images?: PokemonImages | null;
-  types?: Types[] | null;
+  name: '';
+  sprites: PokemonImages;
+  types: Types[];
   isFavorite: boolean;
 }
 
@@ -13,7 +13,7 @@ export interface PokemonImages {
 
 export interface Types {
   slot: number;
-  type: TypeDetail | null;
+  type: TypeDetail;
 }
 
 export interface TypeDetail {
