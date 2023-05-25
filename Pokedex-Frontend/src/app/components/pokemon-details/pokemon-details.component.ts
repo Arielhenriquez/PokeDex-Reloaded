@@ -9,8 +9,8 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   styleUrls: ['./pokemon-details.component.scss'],
 })
 export class PokemonDetailsComponent {
-  isOpen: boolean = false;
-  isLoading: boolean = true;
+  isOpen = false;
+  isLoading = true;
   pokemonData: SinglePokemon = {
     id: 0,
     name: '',
@@ -60,11 +60,6 @@ export class PokemonDetailsComponent {
     console.log('oli');
   }
 
-  hideDialog() {
-    this.isOpen = false;
-    console.log('Modal closed');
-  }
-
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const pokemonName = params.get('name');
@@ -72,8 +67,5 @@ export class PokemonDetailsComponent {
         this.getByName(pokemonName);
       }
     });
-  }
-  greeting() {
-    alert('ola starlin jiji');
   }
 }

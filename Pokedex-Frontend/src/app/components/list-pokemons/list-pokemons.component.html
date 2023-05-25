@@ -22,12 +22,8 @@
                 </td>
                 <td>
                     <p-skeleton *ngIf="isLoading; else detailContent" width="100%" height="20px"></p-skeleton>
-                    <!-- <ng-template #detailContent><app-pokemon-details></app-pokemon-details></ng-template> -->
                     <ng-template #detailContent><app-pokemon-details
                             [pokemonName]="pokemon.name"></app-pokemon-details></ng-template>
-
-                    <!-- <ng-template #urlContent><a>{{ pokemon.url }}</a></ng-template> -->
-                    <!-- <ng-template #urlContent><a>{{ pokemon.url }}</a></ng-template> -->
                 </td>
             </tr>
         </ng-template>

@@ -17,7 +17,9 @@
             </div>
             <img src="{{pokemonData.sprites.front_default}}" alt="pokemon">
             <img src="{{pokemonData.sprites.back_default}}" alt="pokemon">
-            <p>Favorite button.</p>
+            <app-add-remove-favorite-pokemon [pokemonName]="pokemonName"
+                [isFavorite]="pokemonData.isFavorite"></app-add-remove-favorite-pokemon>
+
         </ng-template>
     </p-dialog>
 
