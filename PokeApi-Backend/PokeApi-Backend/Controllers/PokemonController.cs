@@ -45,7 +45,7 @@ namespace PokeApi_Backend.Controllers
         }
 
         [SwaggerOperation(Summary = "Add a pokemon as a favorite by name")]
-        [HttpPost("{name}/favorite")]
+        [HttpPut("{name}/favorite")]
         public async Task<IActionResult> AddFavoritePokemon([FromRoute] string name)
         {
             try
@@ -64,13 +64,13 @@ namespace PokeApi_Backend.Controllers
         }
 
         [SwaggerOperation(Summary = "Remove a pokemon as a favorite by name")]
-        [HttpPost("{name}/remove-favorite")]
+        [HttpDelete("{name}/favorite")]
         public async Task<IActionResult> RemoveFavoritePokemon([FromRoute] string name)
         {
             try
             {
                 await _pokeService.RemoveFavoritePokemonAsync(name);
-                return StatusCode(204);
+                return NoContent();
             }
             catch (PokemonNotFavoriteException ex)
             {
