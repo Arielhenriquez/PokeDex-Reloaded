@@ -12,7 +12,13 @@ import { ListFavoritePokemonsComponent } from './components/favorites-pokemons/l
 import { AddRemoveFavoritePokemonComponent } from './components/favorites-pokemons/add-remove-favorite-pokemon/add-remove-favorite-pokemon.component';
 
 @NgModule({
-  declarations: [AppComponent, ListPokemonsComponent, PokemonDetailsComponent, ListFavoritePokemonsComponent, AddRemoveFavoritePokemonComponent],
+  declarations: [
+    AppComponent,
+    ListPokemonsComponent,
+    PokemonDetailsComponent,
+    ListFavoritePokemonsComponent,
+    AddRemoveFavoritePokemonComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
