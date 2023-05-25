@@ -38,4 +38,24 @@ export class PokemonService {
       `${BASE_URL}/${this.controller}/${name}`
     );
   }
+
+  addFavoritePokemon(name: string): Observable<string> {
+    return this.httpClient.post<string>(
+      `${BASE_URL}/${this.controller}/add-favorite`,
+      { name }
+    );
+  }
+
+  removeFavoritePokemon(name: string): Observable<string> {
+    return this.httpClient.post<string>(
+      `${BASE_URL}/${this.controller}/remove-favorite`,
+      { name }
+    );
+  }
+
+  getFavoritePokemons(): Observable<SinglePokemon[]> {
+    return this.httpClient.get<SinglePokemon[]>(
+      `${BASE_URL}/${this.controller}/favorite`
+    );
+  }
 }
