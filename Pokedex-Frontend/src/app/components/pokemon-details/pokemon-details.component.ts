@@ -10,6 +10,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 })
 export class PokemonDetailsComponent {
   isOpen: boolean = false;
+  isLoading: boolean = true;
   pokemonData: SinglePokemon = {
     id: 0,
     name: '',
@@ -43,14 +44,17 @@ export class PokemonDetailsComponent {
       return;
     }
 
+    this.isLoading = true;
+
     this.pokemonService
       .getPokemonByName(name)
       .subscribe((singlePokemon: SinglePokemon) => {
-        console.log(`${singlePokemon} con el nombre ${name}`);
         this.pokemonData = singlePokemon;
+        this.isLoading = false;
         console.log(singlePokemon);
       });
   }
+
   showDialog() {
     this.isOpen = true;
     console.log('oli');
