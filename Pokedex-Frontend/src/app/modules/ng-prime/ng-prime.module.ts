@@ -7,6 +7,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [],
@@ -19,6 +21,8 @@ import { ToastModule } from 'primeng/toast';
     ProgressSpinnerModule,
     DialogModule,
     ToastModule,
+    MenuModule,
+    MenubarModule,
   ],
 })
 export class NgPrimeModule {}
