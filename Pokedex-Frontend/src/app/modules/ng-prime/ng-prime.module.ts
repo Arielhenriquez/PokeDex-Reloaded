@@ -6,6 +6,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { DialogModule } from 'primeng/dialog';
     SkeletonModule,
     ProgressSpinnerModule,
     DialogModule,
+    ToastModule,
   ],
 })
 export class NgPrimeModule {}

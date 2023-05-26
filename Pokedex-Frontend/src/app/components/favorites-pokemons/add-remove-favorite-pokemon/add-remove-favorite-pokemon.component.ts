@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SinglePokemon } from 'src/app/models/single-pokemon';
+import { MessageService } from 'primeng/api';
 import { PokemonService } from 'src/app/services/pokemon.service';
 
 @Component({
@@ -11,7 +11,10 @@ export class AddRemoveFavoritePokemonComponent {
   @Input() isFavorite = false;
   @Input() pokemonName!: string;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private messageService: MessageService
+  ) {}
 
   addRemoveFavorite() {
     if (this.isFavorite === true) {
@@ -19,6 +22,11 @@ export class AddRemoveFavoritePokemonComponent {
         .removeFavoritePokemon(this.pokemonName)
         .subscribe((response: string) => {
           this.isFavorite = false;
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Info',
+            detail: `Pokemon ${this.pokemonName} removed from the favorite list`,
+          });
           console.log(response);
         });
     } else {
@@ -26,6 +34,11 @@ export class AddRemoveFavoritePokemonComponent {
         .addFavoritePokemon(this.pokemonName)
         .subscribe((response: string) => {
           this.isFavorite = true;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response,
+          });
           console.log(response);
         });
     }

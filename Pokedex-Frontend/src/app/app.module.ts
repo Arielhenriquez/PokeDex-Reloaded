@@ -10,6 +10,7 @@ import { PokemonService } from './services/pokemon.service';
 import { NgPrimeModule } from './modules/ng-prime/ng-prime.module';
 import { ListFavoritePokemonsComponent } from './components/favorites-pokemons/list-favorite-pokemons/list-favorite-pokemons.component';
 import { AddRemoveFavoritePokemonComponent } from './components/favorites-pokemons/add-remove-favorite-pokemon/add-remove-favorite-pokemon.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { AddRemoveFavoritePokemonComponent } from './components/favorites-pokemo
     HttpClientModule,
     NgPrimeModule,
   ],
-  providers: [PokemonService],
+  providers: [PokemonService, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
