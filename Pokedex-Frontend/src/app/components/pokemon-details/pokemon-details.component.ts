@@ -68,4 +68,8 @@ export class PokemonDetailsComponent {
       }
     });
   }
+
+  onPokemonFavoriteChanged() {
+    this.getByName(this.pokemonName);
+  }
 }

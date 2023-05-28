@@ -15,10 +15,11 @@
             <div *ngFor="let type of pokemonData?.types">
                 <h2>Type: {{type?.type?.name}}</h2>
             </div>
-            <img src="{{pokemonData.sprites.front_default}}" alt="pokemon">
-            <img src="{{pokemonData.sprites.back_default}}" alt="pokemon">
-            <app-add-remove-favorite-pokemon [pokemonName]="pokemonName"
-                [isFavorite]="pokemonData.isFavorite"></app-add-remove-favorite-pokemon>
+            <img [src]="pokemonData.sprites.front_default" alt="Pokemon">
+            <img [src]="pokemonData.sprites.back_default" alt="Pokemon">
+            <app-add-remove-favorite-pokemon [pokemonName]="pokemonName" [isFavorite]="pokemonData.isFavorite"
+                (pokemonFavoriteChanged)="onPokemonFavoriteChanged()">
+            </app-add-remove-favorite-pokemon>
 
         </ng-template>
     </p-dialog>

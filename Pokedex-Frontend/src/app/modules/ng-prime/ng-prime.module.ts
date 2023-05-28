@@ -9,6 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { MenubarModule } from 'primeng/menubar';
     ToastModule,
     MenuModule,
     MenubarModule,
+    CardModule,
   ],
 })
 export class NgPrimeModule {}
