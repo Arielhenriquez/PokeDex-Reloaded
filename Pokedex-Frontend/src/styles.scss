@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
+
+body {
+    background-color: #FFDE00;
+}
+
+
+body,
+body .p-component {
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}

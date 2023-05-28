@@ -1,0 +1,32 @@
+::ng-deep .p-menubar {
+    background-color: #3B4CCA !important;
+    color: #fff;
+}
+
+::ng-deep .p-menubar .p-menuitem-link {
+    color: #fff !important;
+}
+
+::ng-deep .p-menubar .p-menuitem-text {
+    color: #fff !important;
+}
+
+::ng-deep .p-menubar .p-menuitem-icon {
+    color: #fff !important;
+}
+
+::ng-deep .p-menubar .p-menuitem-active {
+    background-color: #3D7DCA !important;
+}
+
+::ng-deep .p-menubar .p-menuitem-active .p-menuitem-link {
+    color: #FFCB05 !important;
+    /* Pokemon Yellow */
+}
+
+::ng-deep .p-menubar .p-menuitem-link:hover {
+    background-color: #007BFF !important;
+    /* Pokemon Blue */
+    color: #FFDE00 !important;
+    /* Pokemon Yellow */
+}
