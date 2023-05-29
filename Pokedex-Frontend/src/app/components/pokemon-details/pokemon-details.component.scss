@@ -1,0 +1,36 @@
+.pokemon-dialog {
+    .pokemon-data-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .pokemon-details {
+            .pokemon-data {
+                font-size: 1.5em;
+                color: #3D7DCA; // Pokemon Light Blue
+                text-align: center;
+            }
+
+            .favorite-button {
+                text-align: center;
+            }
+        }
+
+        .pokemon-images {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+                margin: 0 10px;
+                line-height: 80px; // Adjust this value to match the height of your images.
+            }
+
+            img {
+                margin-left: 10px;
+            }
+        }
+    }
+}
