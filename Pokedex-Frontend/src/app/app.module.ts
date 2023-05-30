@@ -12,7 +12,6 @@ import { ListFavoritePokemonsComponent } from './components/favorites-pokemons/l
 import { AddRemoveFavoritePokemonComponent } from './components/favorites-pokemons/add-remove-favorite-pokemon/add-remove-favorite-pokemon.component';
 import { MessageService } from 'primeng/api';
 import { HomeComponent } from './layout/home/home.component';
-import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { FooterComponent } from './layout/footer/footer.component';
     ListFavoritePokemonsComponent,
     AddRemoveFavoritePokemonComponent,
     HomeComponent,
-    FooterComponent,
   ],
   imports: [
     BrowserModule,

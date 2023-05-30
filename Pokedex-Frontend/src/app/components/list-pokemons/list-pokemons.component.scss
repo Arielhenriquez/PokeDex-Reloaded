@@ -27,47 +27,48 @@
 
 ::ng-deep {
     .p-datatable .p-datatable-tbody>tr {
-        background-color: #3D7DCA;
-        /* Pokemon Sapphire Blue */
-        color: #FEFEFE;
-        /* White */
+        background-color: #FEFEFE;
+        color: #3D7DCA;
         line-height: 1.5;
-        /* Adjust to suit your needs */
         font-size: 1.2em;
-        /* Adjust to make font larger */
     }
 
     .p-datatable .p-datatable-thead>tr {
         background-color: #FFCB05;
-        /* Pokemon Yellow */
         color: #3B4CCA;
-        /* Pokemon Sapphire Blue */
     }
 
     .p-datatable .p-datatable-thead>tr th {
         line-height: 1.5;
-        /* Adjust to suit your needs */
         font-size: 1.2em;
-        /* Adjust to make font larger */
-        background-color: #DD3737;
-        /* Pokemon Fire Red */
+        background-color: #FFDE00;
         color: #FEFEFE;
-        /* White */
     }
 
     .p-datatable .p-datatable-tbody>tr:hover,
     .p-datatable .p-datatable-tbody>tr.p-highlight {
-        background-color: #DD3737;
-        /* Pokemon Yellow with lowered opacity */
+        background-color: #FFDE00;
     }
 
     .p-skeleton {
-        background-color: #FEFEFE !important;
-        /* Pokemon Leaf Green */
+        background-color: #FFDE00 !important;
     }
 
     div.table-container p-table {
         width: 70% !important;
         min-width: 30rem !important;
+        margin: 20px;
+    }
+
+    .p-paginator {
+        background-color: #3B4CCA;
+    }
+
+    .p-paginator .p-paginator-pages .p-paginator-page,
+    .p-paginator .p-paginator-first,
+    .p-paginator .p-paginator-prev,
+    .p-paginator .p-paginator-next,
+    .p-paginator .p-paginator-last {
+        color: #FFF;
     }
 }

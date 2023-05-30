@@ -1,38 +1,24 @@
 ::ng-deep .p-menubar {
     background-color: #3B4CCA !important;
-    /* Pokemon Sapphire Blue */
     color: #FEFEFE !important;
-    /* Pokemon Yellow */
 }
 
-::ng-deep .p-menubar .p-menuitem-link {
-    color: #FEFEFE !important;
-    /* Pokemon Yellow */
-}
-
-::ng-deep .p-menubar .p-menuitem-text {
-    color: #FEFEFE !important;
-    /* Pokemon Yellow */
-}
-
+::ng-deep .p-menubar .p-menuitem-link,
+::ng-deep .p-menubar .p-menuitem-text,
 ::ng-deep .p-menubar .p-menuitem-icon {
     color: #FEFEFE !important;
-    /* Pokemon Yellow */
 }
 
 ::ng-deep .p-menubar .p-menuitem-active {
-    background-color: #3D7DCA !important;
-    /* Pokemon Light Blue */
+    background-color: #FFDE00 !important;
 }
 
 ::ng-deep .p-menubar .p-menuitem-active .p-menuitem-link {
-    color: #FEFEFE !important;
-    /* White */
+    color: #3B4CCA !important;
+    background-color: #FFDE00 !important;
 }
 
 ::ng-deep .p-menubar .p-menuitem-link:hover {
     background-color: #3D7DCA !important;
-    /* Pokemon Light Blue */
     color: #FEFEFE !important;
-    /* White */
 }

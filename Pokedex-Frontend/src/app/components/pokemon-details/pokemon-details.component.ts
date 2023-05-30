@@ -11,6 +11,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 export class PokemonDetailsComponent {
   isOpen = false;
   isLoading = true;
+  pokemonTypesString = '';
   pokemonData: SinglePokemon = {
     id: 0,
     name: '',
@@ -39,25 +40,21 @@ export class PokemonDetailsComponent {
 
   getByName(name: string) {
     this.showDialog();
-    if (!name) {
-      console.log('No Pokemon name provided');
-      return;
-    }
-
     this.isLoading = true;
 
     this.pokemonService
       .getPokemonByName(name)
       .subscribe((singlePokemon: SinglePokemon) => {
         this.pokemonData = singlePokemon;
+        this.pokemonTypesString = this.pokemonData.types
+          .map((type) => type.type.name)
+          .join(', ');
         this.isLoading = false;
-        console.log(singlePokemon);
       });
   }
 
   showDialog() {
     this.isOpen = true;
-    console.log('oli');
   }
 
   ngOnInit() {

@@ -3,26 +3,32 @@
 </ng-container>
 
 <ng-template #pokemonDataContent>
-    <ng-container *ngFor="let pokemon of pokemonData">
-        <p-card header="Advanced Card" [style]="{ width: '360px' }">
-            <ng-template pTemplate="header">
-                <img alt="No image available" [src]="pokemon.sprites.front_default" />
-            </ng-template>
-            <h2>Id:{{pokemon.id}}</h2>
-            <h2>Name:{{pokemon.name}}</h2>
-            <div *ngFor="let type of pokemon?.types">
-                <h2>Type: {{type?.type?.name}}</h2>
-            </div>
-            <ng-template pTemplate="footer">
-                <app-add-remove-favorite-pokemon [pokemonName]="pokemon.name" [isFavorite]="pokemon.isFavorite"
-                    (pokemonFavoriteChanged)="onPokemonFavoriteChanged()">
-                </app-add-remove-favorite-pokemon>
-
-            </ng-template>
-        </p-card>
-    </ng-container>
+    <div class="pokemon-card-container">
+        <ng-container *ngFor="let pokemon of pokemonData">
+            <p-card class="pokemon-card">
+                <ng-template pTemplate="header">
+                    <img class="pokemon-image" alt="No image available" [src]="pokemon.sprites.front_default" />
+                </ng-template>
+                <div class="pokemon-details">
+                    <p><span class="pokemon-data-title">Id#:</span> <span
+                            class="pokemon-data-value">{{pokemon.id}}</span></p>
+                    <p><span class="pokemon-data-title">Name:</span> <span
+                            class="pokemon-data-value">{{pokemon.name}}</span></p>
+                    <p><span class="pokemon-data-title">Types:</span> <span
+                            class="pokemon-data-value">{{formatTypes(pokemon.types)}}</span></p>
+                </div>
+                <ng-template pTemplate="footer">
+                    <div class="favorite-button">
+                        <app-add-remove-favorite-pokemon [pokemonName]="pokemon.name" [isFavorite]="pokemon.isFavorite"
+                            (pokemonFavoriteChanged)="onPokemonFavoriteChanged()">
+                        </app-add-remove-favorite-pokemon>
+                    </div>
+                </ng-template>
+            </p-card>
+        </ng-container>
+    </div>
 </ng-template>
 
-<div *ngIf="pokemonData.length === 0 && !isLoading">
+<div *ngIf="pokemonData.length === 0 && !isLoading" class="center-no-favorites">
     No Pokemon favorite
 </div>

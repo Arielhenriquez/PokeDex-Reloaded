@@ -18,14 +18,23 @@ export class ListFavoritePokemonsComponent implements OnInit {
     this.pokemonService
       .getFavoritePokemons()
       .subscribe((singlePokemon: SinglePokemon[]) => {
-        this.pokemonData = singlePokemon;
+        this.pokemonData = singlePokemon.map((pokemon) => ({
+          ...pokemon,
+          typesString: this.formatTypes(pokemon.types),
+        }));
         this.isLoading = false;
       });
   }
+
   ngOnInit(): void {
     this.getFavorites();
   }
+
   onPokemonFavoriteChanged() {
     this.getFavorites();
+  }
+
+  formatTypes(types: any[]): string {
+    return types.map((type) => type.type.name).join(', ');
   }
 }

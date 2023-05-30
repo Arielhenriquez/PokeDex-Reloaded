@@ -1,36 +1,75 @@
 .pokemon-dialog {
-    .pokemon-data-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+    padding: 20px;
+    border-radius: 8px; // Rounded corners
+}
 
-        .pokemon-details {
-            .pokemon-data {
-                font-size: 1.5em;
-                color: #3D7DCA; // Pokemon Light Blue
-                text-align: center;
-            }
+.center-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
 
-            .favorite-button {
-                text-align: center;
-            }
-        }
+.pokemon-data-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-        .pokemon-images {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+.pokemon-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-            p {
-                margin: 0 10px;
-                line-height: 80px; // Adjust this value to match the height of your images.
-            }
+.pokemon-data {
+    color: #333; // Dark grey text
+    font-size: 1.2em; // Increase font size
+    margin-bottom: 10px; // Add some space between lines
+}
 
-            img {
-                margin-left: 10px;
-            }
-        }
-    }
+.pokemon-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon-images img {
+    width: 100px; // Or whatever size you want
+    height: 100px; // Or whatever size you want
+    margin: 10px; // Some space around the images
+}
+
+.favorite-button {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+    background: #007bff; // Blue background for the header
+    color: white; // White text
+    font-size: 1.5em; // Increase font size
+}
+
+::ng-deep .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+    color: white;
+}
+
+.pokemon-data-title {
+    font-size: 1.2em; // Change this value as you see fit
+    color: #007bff; // Blue text
+    //background-color: #f0f0f0; // Light grey background
+    padding: 5px;
+    // display: inline-block;
+    width: 100%;
+}
+
+.pokemon-data-value {
+    font-size: 1.2em; // Change this value as you see fi
+    padding: 5px;
+    //display: inline-block;
+    width: 100%;
 }

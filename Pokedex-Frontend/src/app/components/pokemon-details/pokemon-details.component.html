@@ -5,17 +5,21 @@
         [draggable]="false" [resizable]="false" class="pokemon-dialog">
 
         <ng-container *ngIf="isLoading; else pokemonDataContent">
-            <p-progressSpinner></p-progressSpinner>
+            <div class="center-loading">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
         </ng-container>
+
 
         <ng-template #pokemonDataContent>
             <div class="pokemon-data-content">
                 <div class="pokemon-details">
-                    <p class="pokemon-data">Id#: {{pokemonData.id}}</p>
-                    <p class="pokemon-data">Name: {{pokemonData.name}}</p>
-                    <div *ngFor="let type of pokemonData?.types">
-                        <p class="pokemon-data">Type: {{type?.type?.name}}</p>
-                    </div>
+                    <p><span class="pokemon-data-title">Id#:</span> <span
+                            class="pokemon-data-value">{{pokemonData.id}}</span></p>
+                    <p><span class="pokemon-data-title">Name:</span> <span
+                            class="pokemon-data-value">{{pokemonData.name}}</span></p>
+                    <p><span class="pokemon-data-title">Types:</span> <span
+                            class="pokemon-data-value">{{pokemonTypesString}}</span></p>
                 </div>
                 <div class="pokemon-images">
                     <img [src]="pokemonData.sprites.front_default" alt="No image available">
