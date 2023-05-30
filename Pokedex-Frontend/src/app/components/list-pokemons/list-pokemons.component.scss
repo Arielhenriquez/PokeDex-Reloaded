@@ -1,3 +1,14 @@
+.pokemon-container {
+    width: 100%;
+    height: 100%;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .current-page-report {
     text-align: center;
     margin: 20px;
@@ -12,4 +23,52 @@
 .disabled-paginator {
     pointer-events: none;
     opacity: 0.6;
+}
+
+::ng-deep {
+    .p-datatable .p-datatable-tbody>tr {
+        background-color: #FEFEFE;
+        color: #3D7DCA;
+        line-height: 1.5;
+        font-size: 1.2em;
+    }
+
+    .p-datatable .p-datatable-thead>tr {
+        background-color: #FFCB05;
+        color: #3B4CCA;
+    }
+
+    .p-datatable .p-datatable-thead>tr th {
+        line-height: 1.5;
+        font-size: 1.2em;
+        background-color: #FFDE00;
+        color: #FEFEFE;
+    }
+
+    .p-datatable .p-datatable-tbody>tr:hover,
+    .p-datatable .p-datatable-tbody>tr.p-highlight {
+        background-color: #FFDE00;
+    }
+
+    .p-skeleton {
+        background-color: #FFDE00 !important;
+    }
+
+    div.table-container p-table {
+        width: 70% !important;
+        min-width: 30rem !important;
+        margin: 20px;
+    }
+
+    .p-paginator {
+        background-color: #3B4CCA;
+    }
+
+    .p-paginator .p-paginator-pages .p-paginator-page,
+    .p-paginator .p-paginator-first,
+    .p-paginator .p-paginator-prev,
+    .p-paginator .p-paginator-next,
+    .p-paginator .p-paginator-last {
+        color: #FFF;
+    }
 }

@@ -1,1 +1,34 @@
-<p>list-favorite-pokemons works!</p>
+<ng-container *ngIf="isLoading; else pokemonDataContent">
+    <p-progressSpinner></p-progressSpinner>
+</ng-container>
+
+<ng-template #pokemonDataContent>
+    <div class="pokemon-card-container">
+        <ng-container *ngFor="let pokemon of pokemonData">
+            <p-card class="pokemon-card">
+                <ng-template pTemplate="header">
+                    <img class="pokemon-image" alt="No image available" [src]="pokemon.sprites.front_default" />
+                </ng-template>
+                <div class="pokemon-details">
+                    <p><span class="pokemon-data-title">Id#:</span> <span
+                            class="pokemon-data-value">{{pokemon.id}}</span></p>
+                    <p><span class="pokemon-data-title">Name:</span> <span
+                            class="pokemon-data-value">{{pokemon.name}}</span></p>
+                    <p><span class="pokemon-data-title">Types:</span> <span
+                            class="pokemon-data-value">{{formatTypes(pokemon.types)}}</span></p>
+                </div>
+                <ng-template pTemplate="footer">
+                    <div class="favorite-button">
+                        <app-add-remove-favorite-pokemon [pokemonName]="pokemon.name" [isFavorite]="pokemon.isFavorite"
+                            (pokemonFavoriteChanged)="onPokemonFavoriteChanged()">
+                        </app-add-remove-favorite-pokemon>
+                    </div>
+                </ng-template>
+            </p-card>
+        </ng-container>
+    </div>
+</ng-template>
+
+<div *ngIf="pokemonData.length === 0 && !isLoading" class="center-no-favorites">
+    No Pokemon favorite
+</div>

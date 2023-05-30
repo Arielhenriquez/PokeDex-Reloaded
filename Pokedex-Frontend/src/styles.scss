@@ -1,2 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
+
+body {
+    color: #fff;
+    background-image: url('/assets/pokemon_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+body,
+body .p-component {
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}

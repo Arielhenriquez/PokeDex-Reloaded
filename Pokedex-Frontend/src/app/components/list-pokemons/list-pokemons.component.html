@@ -1,35 +1,36 @@
-<div *ngIf="pokemons && pokemons.length > 0">
+<div *ngIf="pokemons && pokemons.length > 0" class="pokemon-container">
+    <div class="table-container">
+        <p-table [value]="pokemons" styleClass="pokemons-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:25%" id="name">Name</th>
+                    <th style="width:25%" id="photo">Photo</th>
+                    <th style="width:25%" id="details">Details</th>
+                </tr>
+            </ng-template>
 
-    <p-table [value]="pokemons" [tableStyle]="{ 'min-width': '20rem' }">
+            <ng-template pTemplate="body" let-pokemon>
+                <tr>
+                    <td>
+                        <p-skeleton *ngIf="isLoading; else nameContent" width="100%" height="20px"></p-skeleton>
+                        <ng-template #nameContent>{{ pokemon.name }}</ng-template>
+                    </td>
+                    <td>
+                        <p-skeleton *ngIf="isLoading; else photoContent" width="100%" height="20px"></p-skeleton>
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width:25%" id="name">Name</th>
-                <th style="width:25%" id="photo">Photo</th>
-                <th style="width:25%" id="details">Details</th>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-pokemon>
-            <tr>
-                <td>
-                    <p-skeleton *ngIf="isLoading; else nameContent" width="100%" height="20px"></p-skeleton>
-                    <ng-template #nameContent>{{ pokemon.name }}</ng-template>
-                </td>
-                <td>
-                    <p-skeleton *ngIf="isLoading; else photoContent" width="100%" height="20px"></p-skeleton>
-                    <ng-template #photoContent><img src="{{pokemon.photo}}" alt="pokemon"></ng-template>
-                </td>
-                <td>
-                    <p-skeleton *ngIf="isLoading; else detailContent" width="100%" height="20px"></p-skeleton>
-                    <ng-template #detailContent><app-pokemon-details
-                            [pokemonName]="pokemon.name"></app-pokemon-details></ng-template>
-                </td>
-            </tr>
-        </ng-template>
-
-    </p-table>
-
+                        <ng-template #photoContent>
+                            <img [src]="pokemon.photo" alt="No image available">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <p-skeleton *ngIf="isLoading; else detailContent" width="100%" height="20px"></p-skeleton>
+                        <ng-template #detailContent><app-pokemon-details
+                                [pokemonName]="pokemon.name"></app-pokemon-details></ng-template>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
     <div class="current-page-report">
         Showing {{ firstItem }} to {{ lastItem }} of {{ count }} entries
     </div>
@@ -38,8 +39,8 @@
         [rowsPerPageOptions]="[5,10,20]" [ngClass]="{'disabled-paginator': isPaginatorDisabled}">
     </p-paginator>
 
-</div>
 
+</div>
 
 <div class="loading" *ngIf="pokemons && pokemons.length === 0">
     <p-progressSpinner></p-progressSpinner>
