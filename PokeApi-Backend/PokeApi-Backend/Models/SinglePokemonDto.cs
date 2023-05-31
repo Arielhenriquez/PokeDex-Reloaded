@@ -10,6 +10,12 @@ namespace PokeApi_Backend.Models
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
 
+        [JsonPropertyName("height")]
+        public int Height { get; set; }
+
+        [JsonPropertyName("weight")]
+        public int Weight { get; set; }
+
         [JsonPropertyName("sprites")]
         public PokemonImages? Images { get; set; }
 
@@ -22,8 +28,8 @@ namespace PokeApi_Backend.Models
         [JsonPropertyName("front_default")]
         public string FrontImage { get; set; } = string.Empty;
 
-        [JsonPropertyName("back_default")]
-        public string BackImage { get; set; } = string.Empty;
+        [JsonPropertyName("front_shiny")]
+        public string FrontShinyImage { get; set; } = string.Empty;
     }
     public class Types
     {
