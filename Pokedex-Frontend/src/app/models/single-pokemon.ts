@@ -1,6 +1,8 @@
 export interface SinglePokemon {
   id: number;
   name: '';
+  height: '';
+  weight: '';
   sprites: PokemonImages;
   types: Types[];
   isFavorite: boolean;
@@ -8,7 +10,7 @@ export interface SinglePokemon {
 
 export interface PokemonImages {
   front_default: string;
-  back_default: string;
+  front_shiny: string;
 }
 
 export interface Types {

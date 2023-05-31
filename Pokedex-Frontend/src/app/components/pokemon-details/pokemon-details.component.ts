@@ -15,9 +15,11 @@ export class PokemonDetailsComponent {
   pokemonData: SinglePokemon = {
     id: 0,
     name: '',
+    weight: '',
+    height: '',
     sprites: {
       front_default: '',
-      back_default: '',
+      front_shiny: '',
     },
     types: [
       {
