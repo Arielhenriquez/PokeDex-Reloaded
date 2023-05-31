@@ -31,13 +31,16 @@
             </ng-template>
         </p-table>
     </div>
-    <div class="current-page-report">
-        Showing {{ firstItem }} to {{ lastItem }} of {{ count }} entries
+    <div class="paginator-container">
+        <div class="current-page-report">
+            Showing {{ firstItem }} to {{ lastItem }} of {{ count }} entries
+        </div>
+
+        <p-paginator [totalRecords]="count" [rows]="pageSize" (onPageChange)="onPageChange($event)" [first]="first"
+            [rowsPerPageOptions]="[5,10,20]" [ngClass]="{'disabled-paginator': isPaginatorDisabled}">
+        </p-paginator>
     </div>
 
-    <p-paginator [totalRecords]="count" [rows]="pageSize" (onPageChange)="onPageChange($event)" [first]="first"
-        [rowsPerPageOptions]="[5,10,20]" [ngClass]="{'disabled-paginator': isPaginatorDisabled}">
-    </p-paginator>
 
 
 </div>
