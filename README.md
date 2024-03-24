@@ -1,4 +1,4 @@
-# PokeDex-Reloaded
+# PokeDex-Reloaded: https://pokeapi.co/
 PokeApi Actualizada con .net 7 como backend y Angular para frontend
 Para usar la Poke Api clone el repositorio y ejecute el backend con .net 7 y el frontend con angular 16.
 
